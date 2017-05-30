@@ -13,16 +13,19 @@ x = tf.constant(1.0, name='input')
 w = tf.Variable(0.8, name='weight')
 
 # Neuron : y = w * x
-y = tf.multiply(w, x, name='output')
+with tf.name_scope("operation"):
+    y = tf.multiply(w, x, name='output')
 
 # Actual Output
 y_ = tf.constant(0.0, name='correct_value')
 
 # Loss function , delta square
-loss = tf.pow(y - y_, 2, name='loss')
+with tf.name_scope("loss"):
+    loss = tf.pow(y - y_, 2, name='loss')
 
 # Training Step : Algorithm -> GradientDescentOptimizer
-train_step = tf.train.GradientDescentOptimizer(0.025).minimize(loss)
+with tf.name_scope("training"):
+    train_step = tf.train.GradientDescentOptimizer(0.025).minimize(loss)
 
 # Ploting graph : Tensorboard
 for value in [x, w, y, y_, loss]:
